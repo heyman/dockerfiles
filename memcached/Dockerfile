@@ -12,14 +12,14 @@ ENV HOME /root
 # init system will auto-generate one during boot.
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
+# Add build scripts
+ADD . /build
+
 # Install SSH key
 RUN cat /build/id_rsa.pub >> /root/.ssh/authorized_keys && rm -f /build/id_rsa.pub
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
-
-# Add build scripts
-ADD . /build
 
 # ...put your own build instructions here...
 RUN apt-get update
