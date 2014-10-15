@@ -18,6 +18,9 @@ CMD ["/sbin/my_init"]
 # Add build scripts
 ADD . /build
 
+# Install SSH key
+RUN cat /build/id_rsa.pub >> /root/.ssh/authorized_keys && rm -f /build/id_rsa.pub
+
 # ...put your own build instructions here...
 RUN apt-get update
 
