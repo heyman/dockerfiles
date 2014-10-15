@@ -12,9 +12,6 @@ ENV HOME /root
 # init system will auto-generate one during boot.
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
-
 # Add build scripts
 ADD . /build
 
@@ -32,7 +29,6 @@ RUN cp /build/redis.conf /etc/redis/redis.conf
 
 # Create data dir
 RUN mkdir /data
-RUN chown redis:redis /data
 
 # Remove build scripts
 RUN rm -rf /build
@@ -40,7 +36,9 @@ RUN rm -rf /build
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-VOLUME /data
+VOLUME ["/data", "/var/log/redis", "/etc/redis"]
 EXPOSE 6379
 
-CMD /sbin/my_init
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+
