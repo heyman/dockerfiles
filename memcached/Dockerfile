@@ -18,9 +18,6 @@ ADD . /build
 # Install SSH key
 RUN cat /build/id_rsa.pub >> /root/.ssh/authorized_keys && rm -f /build/id_rsa.pub
 
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
-
 # ...put your own build instructions here...
 RUN apt-get update
 
@@ -38,4 +35,6 @@ RUN rm -rf /build
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 11211
-CMD /sbin/my_init
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
