@@ -28,6 +28,10 @@ RUN rm -rf /build
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# work around for AUFS bug
+# as per https://github.com/docker/docker/issues/783#issuecomment-56013588
+RUN mkdir /etc/ssl/private-copy; mv /etc/ssl/private/* /etc/ssl/private-copy/; rm -r /etc/ssl/private; mv /etc/ssl/private-copy /etc/ssl/private; chmod -R 0700 /etc/ssl/private; chown -R postgres /etc/ssl/private
+
 # Cofigure the database to use our data dir.
 RUN sed -i -e"s/data_directory =.*$/data_directory = '\/data'/" /etc/postgresql/9.5/main/postgresql.conf
 # Allow connections from anywhere.
