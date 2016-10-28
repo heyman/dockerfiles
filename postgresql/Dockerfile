@@ -16,7 +16,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --force-yes \
-        postgresql-9.5 postgresql-client-9.5 postgresql-contrib-9.5 postgis postgresql-9.5-postgis-scripts && \
+        postgresql-9.5 postgresql-client-9.5 postgresql-contrib-9.5 postgresql-9.5-postgis-2.3 postgresql-9.5-postgis-scripts && \
     /etc/init.d/postgresql stop
 
 # Install other tools.
